@@ -7,89 +7,64 @@ import java.util.Scanner;
 public class Main {
 
     static Scanner scanner = new Scanner(System.in);
+    private static int chosenStructure;
+    private static int chosenOperation;
 
-    private static int choosingStructure(){
+    //int[] names = {}; //tu powinna być dwuwymiarowa tablica funkcji
+    private static void choosingStructure(){
         while (true){
-            System.out.println("Podaj na jakiej struktórze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
+            System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
             int odpowiedz = scanner.nextInt();
             if(odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
-                return odpowiedz;
+                chosenStructure=odpowiedz;
+                choosingOperation();
             }
             else {
-                System.out.println("Podałeś błędną wartość\n");
+                System.out.println("Podałeś błędną wartość!\n");
             }
         }
     }
-    public static void main(String[] args) {
-        Array test = new Array();
-        test.add(10);
-        test.add(20);
-        test.add(30);
-        for (int i = 0; i < test.size(); i++) {
-            System.out.println(test.get(i));
+    private static void choosingOperation(){
+        while (true) {
+            System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
+            int odpowiedz = scanner.nextInt();
+            if (odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3) {
+                chosenOperation=odpowiedz;
+                givingValue(odpowiedz);
+            } else if (odpowiedz==4) {
+                choosingStructure();
+                break;
+            } else {
+                System.out.println("Podałeś błędną wartość!\n");
+            }
         }
-        test.search(20);
+    }
+    private static int givingValue(int whichOperation){
+        String[] names = {"dodania:","usunięcia:","wyszukania:"};
+        while (true){
+            System.out.println("Podaj wartość do " + names[whichOperation-1]);
+            return scanner.nextInt();
+        }
+
+    }
+    private static void usingFunctions(){
+        choosingStructure();
+    }
+    private static void usingStructure(){
+
+    }
+    public static void main(String[] args) {
         try {
-            System.out.println(choosingStructure());
+            usingFunctions();
         }catch (InputMismatchException e){
             System.out.println("Podano złą wartość");
         }
-
     }
+    // Co robi -> Podawanie wartości -> Strukture
 
 
-    private  int choosingOperation(){
-        System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie");
-        int odpowiedz = scanner.nextInt();
-        if(odpowiedz==1){
-            System.out.println("Podaj wartość do dodania:");
-            odpowiedz = scanner.nextInt();
-        } else if (odpowiedz==2) {
-            System.out.println("Podaj wartość do usunięcia:");
-            odpowiedz = scanner.nextInt();
-        } else if (odpowiedz==3) {
-            System.out.println("Podaj wartość do wyszukania:");
-            odpowiedz = scanner.nextInt();
-        }
-        return odpowiedz;
-    }
     public static void menu(){
 
-
-        try {
-            // Co robi -> Podawanie wartości -> Strukture
-            //
-
-        } catch (InputMismatchException e) {
-            System.out.println("zla wartosc");
-        }
-
-
-        /*
-        if (odpowiedz == 1) {
-
-            odpowiedz = scanner.nextInt();
-            while (true){
-                if (odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
-
-                    break;
-                }
-                else {
-                    System.out.println("Podałeś błędną wartość");
-                }
-            }
-
-        } else if (odpowiedz==2) {
-            linkedlist();
-        } else if (odpowiedz==3){
-            doublylinkedlist();
-        }
-        else{
-            System.out.println("Podałeś błędny wartość");
-            menu();
-        }
-
-         */
     }
 
     public static void array(int value){
