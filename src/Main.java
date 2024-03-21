@@ -8,6 +8,18 @@ public class Main {
 
     static Scanner scanner = new Scanner(System.in);
 
+    private static int choosingStructure(){
+        while (true){
+            System.out.println("Podaj na jakiej struktórze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
+            int odpowiedz = scanner.nextInt();
+            if(odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
+                return odpowiedz;
+            }
+            else {
+                System.out.println("Podałeś błędną wartość\n");
+            }
+        }
+    }
     public static void main(String[] args) {
         Array dupa = new Array();
         dupa.add(10);
@@ -20,17 +32,8 @@ public class Main {
         }
         dupa.search(20);
     }
-    private int choosingStructure(){
-        System.out.println("Podaj na jakiej struktórze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
-        int odpowiedz = scanner.nextInt();
-        if(odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
-            System.out.println("da");
-        }
-        else{
-            System.out.println("dawd");
-        }
-        return odpowiedz;
-    }
+
+
     private  int choosingOperation(){
         System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie");
         int odpowiedz = scanner.nextInt();
