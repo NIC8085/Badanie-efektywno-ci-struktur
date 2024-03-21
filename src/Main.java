@@ -21,16 +21,20 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        Array dupa = new Array();
-        dupa.add(10);
-        dupa.add(20);
-        dupa.add(30);
-
-        // Wyświetlanie elementów tablicy
-        for (int i = 0; i < dupa.size(); i++) {
-            System.out.println(dupa.get(i));
+        Array test = new Array();
+        test.add(10);
+        test.add(20);
+        test.add(30);
+        for (int i = 0; i < test.size(); i++) {
+            System.out.println(test.get(i));
         }
-        dupa.search(20);
+        test.search(20);
+        try {
+            System.out.println(choosingStructure());
+        }catch (InputMismatchException e){
+            System.out.println("Podano złą wartość");
+        }
+
     }
 
 
