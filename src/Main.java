@@ -1,16 +1,33 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-
+    static Array myArray = new Array();
     static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
+    private static int givenValue;
 
-    //int[] names = {}; //tu powinna być dwuwymiarowa tablica funkcji
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+        File file = new File("file.txt");
+        Scanner in = new Scanner(file);
+
+        String zdanie = in.nextLine();
+        System.out.println(zdanie);
+        menu();
+    }
+    public static void menu(){
+        try {
+            usingFunctions();
+        }catch (InputMismatchException e){
+            System.out.println("Podano złą wartość");}
+    }
     private static void choosingStructure(){
         while (true){
             System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
@@ -18,6 +35,7 @@ public class Main {
             if(odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
                 chosenStructure=odpowiedz;
                 choosingOperation();
+                break;
             }
             else {
                 System.out.println("Podałeś błędną wartość!\n");
@@ -31,35 +49,66 @@ public class Main {
             if (odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3) {
                 chosenOperation=odpowiedz;
                 givingValue(odpowiedz);
+                break;
             } else if (odpowiedz==4) {
                 choosingStructure();
-                break;
             } else {
                 System.out.println("Podałeś błędną wartość!\n");
             }
         }
     }
-    private static int givingValue(int whichOperation){
+
+    private static void givingValue(int whichOperation){
         String[] names = {"dodania:","usunięcia:","wyszukania:"};
         while (true){
-            System.out.println("Podaj wartość do " + names[whichOperation-1]);
-            return scanner.nextInt();
+            if (whichOperation == 1 || whichOperation == 3){
+                System.out.println("Podaj wartość do " + names[whichOperation-1]);
+                givenValue = scanner.nextInt();
+                break;
+            }
+            else {
+                System.out.println("Podaj wartość do usunięcia:");
+                int value = scanner.nextInt();
+                if (value>=0 || value <= myArray.array.length){
+                    givenValue = value;
+                    break;
+                }
+                else {
+                    System.out.println("Podano wartość spoza zakresu!");
+                }
+            }
         }
-
     }
     private static void usingFunctions(){
         choosingStructure();
-    }
-    private static void usingStructure(){
-
-    }
-    public static void main(String[] args) {
-        try {
-            usingFunctions();
-        }catch (InputMismatchException e){
-            System.out.println("Podano złą wartość");
+        switch (chosenStructure) {
+            case 1 -> usingFunctionsArray();
+            //case 2 -> usingFunctionsSinglyLinkedList();
+            //case 3 -> usingFunctionsDoublyLinkedList();
+        }
+    }private static void usingFunctionsArray(){
+        switch (chosenOperation) {
+            case 1 -> {
+                myArray.add(givenValue);
+                System.out.println(myArray.toString());
+                choosingOperation();
+                usingFunctionsArray();
+            }
+            case 2 -> {
+                myArray.remove(givenValue);
+                System.out.println(myArray.toString());
+                choosingOperation();
+                usingFunctionsArray();
+            }
+            case 3 -> {
+                myArray.search(givenValue);
+                choosingOperation();
+                usingFunctionsArray();
+            }
         }
     }
+
+
     // Co robi -> Podawanie wartości -> Strukture
 
 

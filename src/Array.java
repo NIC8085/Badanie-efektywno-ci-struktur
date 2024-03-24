@@ -1,10 +1,12 @@
+import java.util.Arrays;
+
 public class Array {
-    private int[] array = new int[1];
+    public int[] array = new int[1];
     private int size = 0;
 
     public void add(int value) {
         if(size == array.length){
-            int[] newArray = new int[array.length * 2];
+            int[] newArray = new int[array.length + 1];
             for(int i = 0; i<size; i++){
                 newArray[i] = array[i];
             }
@@ -35,7 +37,38 @@ public class Array {
         }
     }
 
+    public void remove(int value){
+        int counter = 0;
+        for(int i = 0; i < array.length; i++){
+            if (array[i]==value){
+                counter++;
+            }
+        }
+        int[] helpArray = new int[array.length-counter];
+        int j = 0;
+        for(int i = 0; i < array.length; i++){
+            if (array[i] != value){
+                helpArray[i-j]=array[i];
+                System.out.println("nig");
+            }else {
+                j++;
+            }
+
+        }
+        array=helpArray;
+        size-=counter;
+    }
+
     public int size() {
         return size;
     }
+
+    @Override
+    public String toString() {
+        return "Array{" +
+                "array=" + Arrays.toString(array) +
+                ", size=" + array.length +
+                '}';
+    }
 }
+//{}
