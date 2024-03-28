@@ -60,6 +60,7 @@ public class Main {
                 givenValue = scanner.nextInt();
                 System.out.println("Podaj index dodania:");
                 givenIndex = scanner.nextInt();
+
                 if (givenIndex > myArray.array.length || givenIndex < 0){
                     System.out.println("Podano wartość spoza zakresu!");
                 }
@@ -67,9 +68,11 @@ public class Main {
                     break;
                 }
 
+
             } else if (whichOperation == 3) {
                 System.out.println("Podaj wartość do wyszukania:");
-
+                givenValue = scanner.nextInt();
+                break;
             } else {
                 System.out.println("Podaj wartość do usunięcia:");
                 int value = scanner.nextInt();
