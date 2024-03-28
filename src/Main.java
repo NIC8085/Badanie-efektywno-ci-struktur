@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     static Array myArray = new Array();
     static LinkedList myLikedList = new LinkedList();
+    static DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
     static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
@@ -93,7 +94,7 @@ public class Main {
         switch (chosenStructure) {
             case 1 -> usingFunctionsArray();
             case 2 -> usingFunctionsSinglyLinkedList();
-            //case 3 -> usingFunctionsDoublyLinkedList();
+            case 3 -> usingFunctionsDoublyLinkedList();
         }
     }
     private static void usingFunctionsArray(){
@@ -137,6 +138,30 @@ public class Main {
                 myLikedList.search(givenValue);
                 choosingOperation();
                 usingFunctionsSinglyLinkedList();
+            }
+        }
+    }
+    private static void usingFunctionsDoublyLinkedList(){
+        switch (chosenOperation) {
+            case 1 -> {
+                myDoublyLinkedList.add(givenIndex, givenValue);
+                myDoublyLinkedList.print();
+                System.out.println(" ");
+                choosingOperation();
+                usingFunctionsDoublyLinkedList();
+            }
+            case 2 -> {
+                //myDoublyLinkedList.remove(givenValue);
+                myDoublyLinkedList.print();
+                System.out.println(" ");
+                choosingOperation();
+                usingFunctionsDoublyLinkedList();
+            }
+            case 3 -> {
+                //myDoublyLinkedList.search(givenValue);
+                System.out.println(" ");
+                choosingOperation();
+                usingFunctionsDoublyLinkedList();
             }
         }
     }
