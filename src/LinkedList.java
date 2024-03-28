@@ -1,5 +1,3 @@
-import java.io.*;
-
 public class LinkedList {
     Node head;
     static class Node {
@@ -14,7 +12,7 @@ public class LinkedList {
             this.next = null;
         }
     }
-
+    // dodać dodawanie po indexie
     public void add(int value){
         if(head == null){
             head = new Node(value);
