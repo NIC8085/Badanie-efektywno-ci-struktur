@@ -2,18 +2,26 @@ import java.util.Arrays;
 
 public class Array {
     public int[] array = new int[1];
-    private int size = 0;
+    private int size = 1;
 
-    public void add(int value) {
-        if(size == array.length){
-            int[] newArray = new int[array.length + 1];
-            for(int i = 0; i<size; i++){
-                newArray[i] = array[i];
-            }
-            array = newArray;
-        }
-        array[size] = value;
+    public void add(int index,int value) {
+        System.out.println(Arrays.toString(array));
+
+        int j = 0;
         size++;
+        int[] newArray = new int[array.length + 1];
+
+        for(int i = 0; i<size; i++){
+            if (i==index){
+                newArray[i] = value;
+                j++;
+            }
+            else {
+                newArray[i] = array[i-j];
+            }
+        }
+        array = newArray;
+        System.out.println(Arrays.toString(array));
     }
     public int get(int index) {
         if (index < 0 || index >= size) {

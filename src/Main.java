@@ -11,16 +11,11 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
+    private static int givenIndex;
     private static int givenValue;
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-        File file = new File("file.txt");
-        Scanner in = new Scanner(file);
-
-        String zdanie = in.nextLine();
-        System.out.println(zdanie);
+    public static void main(String[] args){
         menu();
     }
     public static void menu(){
@@ -61,14 +56,23 @@ public class Main {
     }
 
     private static void givingValue(int whichOperation){
-        String[] names = {"dodania:","usunięcia:","wyszukania:"};
         while (true){
-            if (whichOperation == 1 || whichOperation == 3){
-                System.out.println("Podaj wartość do " + names[whichOperation-1]);
+            if (whichOperation == 1){
+                System.out.println("Podaj wartość do dodania:");
                 givenValue = scanner.nextInt();
-                break;
-            }
-            else {
+                System.out.println("Podaj index dodania:");
+                givenIndex = scanner.nextInt();
+                if (givenIndex > myArray.array.length || givenIndex < 0){
+                    System.out.println("Podano wartość spoza zakresu!");
+                }
+                else {
+                    break;
+                }
+
+            } else if (whichOperation == 3) {
+                System.out.println("Podaj wartość do wyszukania:");
+
+            } else {
                 System.out.println("Podaj wartość do usunięcia:");
                 int value = scanner.nextInt();
                 if (value>=0 || value <= myArray.array.length){
@@ -94,7 +98,7 @@ public class Main {
     private static void usingFunctionsArray(){
         switch (chosenOperation) {
             case 1 -> {
-                myArray.add(givenValue);
+                myArray.add(givenIndex,givenValue);
                 System.out.println(myArray.toString());
                 choosingOperation();
                 usingFunctionsArray();
