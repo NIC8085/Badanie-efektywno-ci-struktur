@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     static Array myArray = new Array();
+    static LinkedList myLikedList = new LinkedList();
     static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
@@ -42,6 +43,7 @@ public class Main {
             }
         }
     }
+
     private static void choosingOperation(){
         while (true) {
             System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
@@ -79,14 +81,17 @@ public class Main {
             }
         }
     }
+
+
     private static void usingFunctions(){
         choosingStructure();
         switch (chosenStructure) {
             case 1 -> usingFunctionsArray();
-            //case 2 -> usingFunctionsSinglyLinkedList();
+            case 2 -> usingFunctionsSinglyLinkedList();
             //case 3 -> usingFunctionsDoublyLinkedList();
         }
-    }private static void usingFunctionsArray(){
+    }
+    private static void usingFunctionsArray(){
         switch (chosenOperation) {
             case 1 -> {
                 myArray.add(givenValue);
@@ -107,25 +112,35 @@ public class Main {
             }
         }
     }
+    private static void usingFunctionsSinglyLinkedList(){
+        switch (chosenOperation) {
+            case 1 -> {
+                myLikedList.add(givenValue);
+                myLikedList.print();
+                System.out.println(" ");
+                choosingOperation();
+                usingFunctionsSinglyLinkedList();
+            }
+            case 2 -> {
+                myArray.remove(givenValue);
+                myLikedList.print();
+                System.out.println(" ");
+                choosingOperation();
+                usingFunctionsSinglyLinkedList();
+            }
+            case 3 -> {
+                myLikedList.search(givenValue);
+                choosingOperation();
+                usingFunctionsSinglyLinkedList();
+            }
+        }
+    }
 
 
     // Co robi -> Podawanie wartości -> Strukture
 
 
-    public static void menu(){
 
-    }
 
-    public static void array(int value){
-        int[] array = new int[1];
-        array[0]=value;
-        System.out.println(Arrays.toString(array));
-    }
-    public static void linkedlist(){
-        System.out.println("To jest lista jednokierunkowa");
-    }
-    public static void doublylinkedlist(){
-        System.out.println("To jest lista dwukierunkowa");
-    }
 }
 //{}

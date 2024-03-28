@@ -21,6 +21,7 @@ public class Array {
         }
         return array[index];
     }
+
     public void search(int value){
         boolean isitThere = false;
         for(int i = 0; i < size;i++){
@@ -30,10 +31,14 @@ public class Array {
             }
         }
         if(isitThere){
+            System.out.println("\n");
             System.out.println("Ta wartość znajduje się w tablicy");
+            System.out.println("\n");
         }
         else {
+            System.out.println("\n");
             System.out.println("Takiej wartoście nie ma w tablicy");
+            System.out.println("\n");
         }
     }
 
