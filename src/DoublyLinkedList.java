@@ -31,7 +31,7 @@ public class DoublyLinkedList {
                 current.prev = newNode;
                 newNode.next=current;
                 head=newNode;
-            } else if (current.next == null && current.prev == null) {
+            } else if (current.next == null) {
                 current.next=newNode;
                 newNode.prev=current;
             } else {
@@ -56,7 +56,10 @@ public class DoublyLinkedList {
                     return;
                 }
                 if (current.data == value){
-                    if (current.prev == null){
+                    if (current.prev == null && current.next == null){
+                        head = null;
+                    }
+                    else if (current.prev == null){
                         current.next.prev=null;
                         head=current.next;
                         size--;
