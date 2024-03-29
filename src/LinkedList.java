@@ -1,4 +1,5 @@
 public class LinkedList {
+    public static int size = 0;
     Node head;
     static class Node {
 
@@ -24,10 +25,12 @@ public class LinkedList {
             }
             last.next = new Node(value);
         }
+        size++;
     }
     public void remove(int value){
         while (head != null && head.data == value) {
             head = head.next;
+            size--;
         }
         if(head == null) {
             System.out.println("Lista jest pusta");
@@ -49,6 +52,7 @@ public class LinkedList {
         if (counter == 0){
             System.out.println("Nie ma takiej wartości w liście");
         }
+        size-=counter;
     }
 
     public void search(int value){

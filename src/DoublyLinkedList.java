@@ -1,4 +1,5 @@
 public class DoublyLinkedList {
+    public static int size = 0;
     Node head;
     static class Node {
         int data;
@@ -22,25 +23,68 @@ public class DoublyLinkedList {
             int i = 0;
             Node current = head;
 
-            while (i != index){
-                current=current.next;
+            while (i != index && current.next != null){
+                current = current.next;
                 i++;
             }
-            newNode.prev=current.prev;
-            newNode.next=current;
-            current.prev=newNode;
-            if(newNode.prev==null){
+            if (index == 0){
+                current.prev = newNode;
+                newNode.next=current;
                 head=newNode;
-            }
-            else {
-                newNode.prev.next=newNode;
+            } else if (current.next == null && current.prev == null) {
+                current.next=newNode;
+                newNode.prev=current;
+            } else {
+                newNode.prev = current.prev;
+                newNode.next = current;
+                current.prev.next = newNode;
+                current.prev = newNode;
             }
         }
+        size++;
+    }
+    public void remove(int value){
+        if (head == null){
+            System.out.println("Lista jest pusta");
+        }
+        else {
+            Node current = head;
+
+            while (current != null){
+                if (current == null){
+                    System.out.println("Nie ma takiej liczby w zbiorze");
+                    return;
+                }
+                if (current.data == value){
+                    if (current.prev == null){
+                        current.next.prev=null;
+                        head=current.next;
+                        size--;
+                    }
+                    else {
+                        current.prev.next = current.next;
+                        current.next.prev = current.prev;
+                        size--;
+                    }
+                }
+                current = current.next;
+            }
+        }
+    }
+    public void search(int value){
+        Node current = head;
+        while(current != null){
+            if (current.data==value){
+                System.out.println("Liczba znajduje się w zbiorze");
+                return;
+            }
+        }
+        System.out.println("Liczba nie znajduje się w zbiorze");
     }
     public void print(){
         Node current = head;
         System.out.println("DoublyLinkedList: ");
-        while (current!=null){
+        while (current != null){
             System.out.println(current.data + " ");
             current = current.next;
         }

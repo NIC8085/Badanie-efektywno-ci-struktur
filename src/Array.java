@@ -1,8 +1,8 @@
 import java.util.Arrays;
 
 public class Array {
-    public int[] array = new int[1];
-    private int size = 1;
+    public int[] array = new int[0];
+    public static int size = 0;
 
     public void add(int index,int value) {
         System.out.println(Arrays.toString(array));
