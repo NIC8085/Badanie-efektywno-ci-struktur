@@ -20,25 +20,25 @@ public class DoublyLinkedList {
             head = newNode;
         }
         else{
-            int i = 0;
             Node current = head;
-
-            while (i != index && current.next != null){
-                current = current.next;
-                i++;
-            }
             if (index == 0){
                 current.prev = newNode;
                 newNode.next=current;
                 head=newNode;
-            } else if (current.next == null) {
-                current.next=newNode;
+            }
+            else {
+                int i = 1;
+                while (i != index && current.next != null){
+                    current = current.next;
+                    i++;
+                }
+                if (current.next != null){
+                    current.next.prev=newNode;
+                }
+                newNode.next=current.next;
                 newNode.prev=current;
-            } else {
-                newNode.prev = current.prev;
-                newNode.next = current;
-                current.prev.next = newNode;
-                current.prev = newNode;
+                current.next=newNode;
+
             }
         }
         size++;
@@ -50,14 +50,11 @@ public class DoublyLinkedList {
         else {
             Node current = head;
 
-            while (current != null){
-                if (current == null){
-                    System.out.println("Nie ma takiej liczby w zbiorze");
-                    return;
-                }
+            while (true){
                 if (current.data == value){
                     if (current.prev == null && current.next == null){
                         head = null;
+                        size--;
                     }
                     else if (current.prev == null){
                         current.next.prev=null;
@@ -71,6 +68,10 @@ public class DoublyLinkedList {
                     }
                 }
                 current = current.next;
+                if (current == null){
+                    System.out.println("Nie ma takiej liczby w zbiorze");
+                    return;
+                }
             }
         }
     }
@@ -81,6 +82,7 @@ public class DoublyLinkedList {
                 System.out.println("Liczba znajduje się w zbiorze");
                 return;
             }
+            current=current.next;
         }
         System.out.println("Liczba nie znajduje się w zbiorze");
     }

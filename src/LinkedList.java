@@ -15,36 +15,41 @@ public class LinkedList {
     }
     // dodać dodawanie po indexie
     public void add(int index, int value){
+        Node newNode = new Node(value);
         if(head == null){
-            head = new Node(value);
+            head = newNode;
         }
         else {
             Node current = head;
             if (index == 0){
-                head=new Node(value);
-                head.next=current;
+                head = newNode;
+                head.next = current;
             }
             else {
-                int i = 0;
-                while (i != index){
+                int i = 1;
+                while (i != index && current.next != null){
                     current = current.next;
                     i++;
                 }
-
+                if (current.next == null){
+                    current.next = newNode;
+                }
+                else {
+                    newNode.next = current.next;
+                    current.next = newNode;
+                }
             }
-
-
         }
         size++;
     }
     public void remove(int value){
-        while (head != null && head.data == value) {
-            head = head.next;
-            size--;
-        }
         if(head == null) {
             System.out.println("Lista jest pusta");
             return;
+        }
+        while (head != null && head.data == value) {
+            head = head.next;
+            size--;
         }
         Node current = head.next;
         Node prev = head;

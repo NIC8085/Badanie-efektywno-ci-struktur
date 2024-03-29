@@ -1,10 +1,13 @@
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     static Array myArray = new Array();
     static LinkedList myLikedList = new LinkedList();
     static DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
+    static Random rand = new Random();
     static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
@@ -58,7 +61,7 @@ public class Main {
                 givenIndex = scanner.nextInt();
 
                 if (chosenStructure == 1){
-                    if (givenIndex >= 0 && givenIndex <= Array.size){
+                    if (givenIndex >= 0 && givenIndex <= myArray.array.length){
                         break;
                     }
                 } else if (chosenStructure==2) {

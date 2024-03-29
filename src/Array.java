@@ -5,13 +5,10 @@ public class Array {
     public static int size = 0;
 
     public void add(int index,int value) {
-        System.out.println(Arrays.toString(array));
-
         int j = 0;
-        size++;
         int[] newArray = new int[array.length + 1];
 
-        for(int i = 0; i<size; i++){
+        for(int i = 0; i<array.length+1; i++){
             if (i==index){
                 newArray[i] = value;
                 j++;
@@ -58,18 +55,34 @@ public class Array {
             }
         }
         int[] helpArray = new int[array.length-counter];
-        int j = 0;
+        howLess = 0;
         for(int i = 0; i < array.length; i++){
             if (array[i] != value){
-                helpArray[i-j]=array[i];
-                System.out.println("nig");
+                helpArray[i-howLess]=array[i];
             }else {
-                j++;
+                howLess++;
+            }
+        }
+        array=helpArray;
+    }
+    public void removeFromEnd(int value){
+        int counter = 0;
+        for(int i = array.length-1; i >= 0; i--){
+            if (array[i]==value){
+                counter++;
+            }
+        }
+        int[] helpArray = new int[array.length-counter];
+        howLess = 0;
+        for(int i = array.length-1; i >= 0; i--){
+            if (array[i] != value){
+                helpArray[i-howLess]=array[i];
+            }else {
+                howLess++;
             }
 
         }
         array=helpArray;
-        size-=counter;
     }
 
     public int size() {
