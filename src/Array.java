@@ -17,7 +17,6 @@ public class Array {
             }
         }
         array = newArray;
-        System.out.println(Arrays.toString(array));
     }
     public int get(int index) {
         if (index < 0 || index >= array.length) {

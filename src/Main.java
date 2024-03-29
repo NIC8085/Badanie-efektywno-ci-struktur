@@ -20,7 +20,12 @@ public class Main {
     static int wantedSize = 100000;
 
     public static void main(String[] args){
-        menu();
+        System.out.println("Podaj co chcesz robić: \n 1 - Dodawać wartości \n 2 - Sprawdzić czas struktur danych");
+        int selectedMenu = scanner.nextInt();
+        switch (selectedMenu) {
+            case 1 -> menu();
+            //case 2 -> timemenu();
+        }
     }
     public static void menu(){
         try {
