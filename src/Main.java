@@ -13,6 +13,11 @@ public class Main {
     private static int chosenOperation;
     private static int givenIndex;
     private static int givenValue;
+    private static int chosenAction;
+    static long start_time = System.currentTimeMillis();
+    static long end_time = System.currentTimeMillis();
+    static int exc_time = 0;
+    static int wantedSize = 100000;
 
     public static void main(String[] args){
         menu();
@@ -25,7 +30,7 @@ public class Main {
     }
     private static void choosingStructure(){
         while (true){
-            System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
+            System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa  \n 4. Wróć");
             int odpowiedz = scanner.nextInt();
             if(odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3){
                 chosenStructure = odpowiedz;
