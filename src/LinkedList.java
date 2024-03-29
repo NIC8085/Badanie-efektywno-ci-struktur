@@ -14,16 +14,26 @@ public class LinkedList {
         }
     }
     // dodać dodawanie po indexie
-    public void add(int value){
+    public void add(int index, int value){
         if(head == null){
             head = new Node(value);
         }
         else {
-            Node last = head;
-            while (last.next != null) {
-                last = head.next;
+            Node current = head;
+            if (index == 0){
+                head=new Node(value);
+                head.next=current;
             }
-            last.next = new Node(value);
+            else {
+                int i = 0;
+                while (i != index){
+                    current = current.next;
+                    i++;
+                }
+
+            }
+
+
         }
         size++;
     }
@@ -51,6 +61,7 @@ public class LinkedList {
         }
         if (counter == 0){
             System.out.println("Nie ma takiej wartości w liście");
+            return;
         }
         size-=counter;
     }
@@ -65,8 +76,12 @@ public class LinkedList {
             }
             currNode = currNode.next;
         }
-        if(isThere) System.out.println("Liczba znaduje się w liście");
-        else System.out.println("Ta liczba nie znajduje się w zbiorze");
+        if (isThere){
+            System.out.println("Liczba znaduje się w liście");
+        }
+        else {
+            System.out.println("Ta liczba nie znajduje się w zbiorze");
+        }
     }
 
     public void print() {
