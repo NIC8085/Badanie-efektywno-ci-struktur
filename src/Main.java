@@ -1,5 +1,3 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,7 +10,6 @@ public class Main {
     private static int chosenOperation;
     private static int givenIndex;
     private static int givenValue;
-
 
     public static void main(String[] args){
         menu();
@@ -27,8 +24,8 @@ public class Main {
         while (true){
             System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa");
             int odpowiedz = scanner.nextInt();
-            if(odpowiedz==1 || odpowiedz==2 || odpowiedz==3){
-                chosenStructure=odpowiedz;
+            if(odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3){
+                chosenStructure = odpowiedz;
                 choosingOperation();
                 break;
             }
@@ -37,7 +34,6 @@ public class Main {
             }
         }
     }
-
     private static void choosingOperation(){
         while (true) {
             System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
@@ -46,14 +42,13 @@ public class Main {
                 chosenOperation=odpowiedz;
                 givingValue(odpowiedz);
                 break;
-            } else if (odpowiedz==4) {
+            } else if (odpowiedz == 4) {
                 choosingStructure();
             } else {
                 System.out.println("Podałeś błędną wartość!\n");
             }
         }
     }
-
     private static void givingValue(int whichOperation){
         while (true){
             if (whichOperation == 1){
@@ -62,22 +57,22 @@ public class Main {
                 System.out.println("Podaj index dodania:");
                 givenIndex = scanner.nextInt();
 
-                if (chosenStructure==1){
-                    if (givenIndex>=0 && givenIndex <= Array.size){
+                if (chosenStructure == 1){
+                    if (givenIndex >= 0 && givenIndex <= Array.size){
                         break;
                     }
                 } else if (chosenStructure==2) {
-                    if (givenIndex>=0 && givenIndex <= LinkedList.size){
+                    if (givenIndex >= 0 && givenIndex <= LinkedList.size){
                         break;
                     }
                 }
                 else {
-                    if (givenIndex>=0 && givenIndex<= DoublyLinkedList.size){
+                    if (givenIndex >= 0 && givenIndex <= DoublyLinkedList.size){
                         System.out.println(DoublyLinkedList.size);
                         break;
                     }
                 }
-                System.out.println("Podano wartość spoza zakresu!");
+                System.out.println("Podano wartość spoza zakresu!\n");
 
             } else if (whichOperation == 2) {
                 System.out.println("Podaj wartość do usunięcia:");
@@ -91,8 +86,6 @@ public class Main {
             }
         }
     }
-
-
     private static void usingFunctions(){
         choosingStructure();
         switch (chosenStructure) {
@@ -104,7 +97,7 @@ public class Main {
     private static void usingFunctionsArray(){
         switch (chosenOperation) {
             case 1 -> {
-                myArray.add(givenIndex,givenValue);
+                myArray.add(givenIndex, givenValue);
                 System.out.println(myArray.toString());
                 choosingOperation();
                 usingFunctionsArray();
@@ -125,7 +118,7 @@ public class Main {
     private static void usingFunctionsSinglyLinkedList(){
         switch (chosenOperation) {
             case 1 -> {
-                myLikedList.add(givenValue);
+                myLikedList.add(givenIndex, givenValue);
                 myLikedList.print();
                 System.out.println(" ");
                 choosingOperation();
@@ -170,12 +163,4 @@ public class Main {
             }
         }
     }
-
-
-    // Co robi -> Podawanie wartości -> Strukture
-
-
-
-
 }
-//{}
