@@ -62,28 +62,32 @@ public class Main {
                 System.out.println("Podaj index dodania:");
                 givenIndex = scanner.nextInt();
 
-                if (givenIndex > myArray.array.length || givenIndex < 0){
-                    System.out.println("Podano wartość spoza zakresu!");
+                if (chosenStructure==1){
+                    if (givenIndex>=0 && givenIndex <= Array.size){
+                        break;
+                    }
+                } else if (chosenStructure==2) {
+                    if (givenIndex>=0 && givenIndex <= LinkedList.size){
+                        break;
+                    }
                 }
                 else {
-                    break;
+                    if (givenIndex>=0 && givenIndex<= DoublyLinkedList.size){
+                        System.out.println(DoublyLinkedList.size);
+                        break;
+                    }
                 }
+                System.out.println("Podano wartość spoza zakresu!");
 
+            } else if (whichOperation == 2) {
+                System.out.println("Podaj wartość do usunięcia:");
+                givenValue= scanner.nextInt();
+                break;
 
-            } else if (whichOperation == 3) {
+            } else {
                 System.out.println("Podaj wartość do wyszukania:");
                 givenValue = scanner.nextInt();
                 break;
-            } else {
-                System.out.println("Podaj wartość do usunięcia:");
-                int value = scanner.nextInt();
-                if (value>=0 || value <= myArray.array.length){
-                    givenValue = value;
-                    break;
-                }
-                else {
-                    System.out.println("Podano wartość spoza zakresu!");
-                }
             }
         }
     }
@@ -151,14 +155,15 @@ public class Main {
                 usingFunctionsDoublyLinkedList();
             }
             case 2 -> {
-                //myDoublyLinkedList.remove(givenValue);
+                myDoublyLinkedList.remove(givenValue);
                 myDoublyLinkedList.print();
                 System.out.println(" ");
                 choosingOperation();
                 usingFunctionsDoublyLinkedList();
             }
             case 3 -> {
-                //myDoublyLinkedList.search(givenValue);
+                myDoublyLinkedList.search(givenValue);
+                myDoublyLinkedList.print();
                 System.out.println(" ");
                 choosingOperation();
                 usingFunctionsDoublyLinkedList();
