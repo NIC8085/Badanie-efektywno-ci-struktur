@@ -99,5 +99,20 @@ public class LinkedList {
         }
     }
 
+    public int get(int index){
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("Indeks poza zakresem");
+        }
+        else {
+            Node current = head;
+            int i = 0;
+            while (i != index){
+                current = current.next;
+                i++;
+            }
+            return current.data;
+        }
+    }
+
 
 }
