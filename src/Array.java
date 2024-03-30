@@ -47,12 +47,12 @@ public class Array {
             }
         }
         int[] helpArray = new int[array.length-counter];
-        howLess = 0;
+        int j = 0;
         for(int i = 0; i < array.length; i++){
             if (array[i] != value){
-                helpArray[i-howLess]=array[i];
+                helpArray[i-j]=array[i];
             }else {
-                howLess++;
+                j++;
             }
         }
         array=helpArray;
@@ -80,6 +80,8 @@ public class Array {
     public int size() {
         return array.length;
     }
+
+
 
     @Override
     public String toString() {
