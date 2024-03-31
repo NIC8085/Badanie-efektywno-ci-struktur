@@ -13,7 +13,6 @@ public class LinkedList {
             this.next = null;
         }
     }
-    // dodać dodawanie po indexie
     public void add(int index, int value){
         Node newNode = new Node(value);
         if(head == null){
@@ -45,30 +44,36 @@ public class LinkedList {
     public void remove(int value){
         if(head == null) {
             System.out.println("Lista jest pusta");
-            return;
         }
-        while (head != null && head.data == value) {
-            head = head.next;
-            size--;
-        }
-        Node current = head.next;
-        Node prev = head;
-
-        int counter=0;
-        while (current != null){
-            if (current.data == value){
-                prev.next=current.next;
-                current=current.next;
+        else {
+            int counter=0;
+            while (head != null && head.data == value) {
+                head = head.next;
                 counter++;
             }
-            prev=current;
-            current=current.next;
+            if (head==null){
+                size-=counter;
+                return;
+            }
+            Node current = head;
+            while (current.next != null){
+                while (current.next.data==value){
+                    counter++;
+                    current.next=current.next.next;
+                    if (current.next==null){
+                        break;
+                    }
+                }
+                if (current.next!=null){
+                    current=current.next;
+                }
+            }
+            if (counter == 0){
+                System.out.println("Nie ma takiej wartości w liście");
+                return;
+            }
+            size-=counter;
         }
-        if (counter == 0){
-            System.out.println("Nie ma takiej wartości w liście");
-            return;
-        }
-        size-=counter;
     }
 
     public void search(int value){
@@ -92,11 +97,18 @@ public class LinkedList {
     public void print() {
         Node currNode = head;
 
-        System.out.print("LinkedList: ");
+        System.out.print("LinkedList: [");
+
         while (currNode != null) {
-            System.out.print(currNode.data + " ");
+            if (currNode.next!=null){
+                System.out.print(currNode.data + ", ");
+            }
+            else {
+                System.out.print(currNode.data);
+            }
             currNode = currNode.next;
         }
+        System.out.print("]");
     }
 
     public int get(int index){

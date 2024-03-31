@@ -66,9 +66,11 @@ public class Array {
         }
         int[] helpArray = new int[array.length-counter];
         howLess = 0;
+        int j = helpArray.length-1;
         for(int i = array.length-1; i >= 0; i--){
             if (array[i] != value){
-                helpArray[i-howLess]=array[i];
+                helpArray[j]=array[i];
+                j--;
             }else {
                 howLess++;
             }
