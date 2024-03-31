@@ -76,23 +76,17 @@ public class LinkedList {
         }
     }
 
-    public void search(int value){
-        boolean isThere = false;
+    public boolean search(int value){
         Node currNode = head;
         while (currNode != null) {
             if (currNode.data == value) {
-                isThere = true;
-                break;
+                return true;
             }
             currNode = currNode.next;
         }
-        if (isThere){
-            System.out.println("Liczba znaduje się w liście");
-        }
-        else {
-            System.out.println("Ta liczba nie znajduje się w zbiorze");
-        }
+        return false;
     }
+
 
     public void print() {
         Node currNode = head;

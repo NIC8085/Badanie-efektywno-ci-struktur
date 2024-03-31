@@ -23,7 +23,6 @@ public class FileReader {
     public static void addingToArray() throws FileNotFoundException {
         Scanner readFile;
         readFile = new Scanner(plik);
-        int index = 0;
         start_time = System.currentTimeMillis();
         for (int i = 0; i<wantedSize; i++){
             while(readFile.hasNext()){

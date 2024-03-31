@@ -1,41 +1,53 @@
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TimeMenu {
-    static Array myArray = new Array();
-    static LinkedList myLikedList = new LinkedList();
-    static DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
-    static Random rand = new Random();
-    static Scanner scanner = new Scanner(System.in);
+    private static Array myArray = new Array();
+    private static LinkedList myLikedList = new LinkedList();
+    private static DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
+    private static Random rand = new Random();
+    private static Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
-    private static int chosenRemove;
+    public static int chosenMethod;
     private static int chosenAdding;
-    static long start_time = System.currentTimeMillis();
-    static long end_time = System.currentTimeMillis();
-    static int exc_time = 0;
-    static int wantedSize = 100000;
+    private static int chosenRemove;
 
-    public static void main(String[] args){
-        timemenu();
-    }
-    public static void timemenu(){
+    private static long start_time = System.currentTimeMillis();
+    private static long end_time = System.currentTimeMillis();
+    private static int exc_time = 0;
+    private static int wantedSize = 100000;
+    private static int randomIndex;
+    private static int odpowiedz;
+    private static int getValue;
+
+    public static void timemenu() throws FileNotFoundException {
         while(true){
             usingFunctionsTime();
         }
     }
-    private static void choosingStructureTime(){
+    private static void usingFunctionsTime() throws FileNotFoundException {
+        choosingStructureTime();
+        switch (chosenStructure) {
+            case 1 -> testingUsingFunctionsArray();
+            case 2 -> testingUsingFunctionsSinglyLinkedList();
+            case 3 -> testingUsingFunctionsDoublyLinkedList();
+        }
+    }
+    private static void choosingStructureTime() throws FileNotFoundException {
+        odpowiedz = 0;
         while (true){
             System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa \n 4. Wróć");
-            int odpowiedz = scanner.nextInt();
+            odpowiedz = scanner.nextInt();
             if(odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3){
                 chosenStructure = odpowiedz;
                 choosingOperationTime();
                 break;
             }
             else if (odpowiedz == 4) {
-
+                Main.mainMenu();
             }
             else {
                 System.out.println("Podałeś błędną wartość!\n");
@@ -45,14 +57,15 @@ public class TimeMenu {
     private static void choosingOperationTime(){
         while (true) {
             System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
-            int odpowiedz = scanner.nextInt();
+            odpowiedz = scanner.nextInt();
             if (odpowiedz == 1 ) {
-                choosingAddingType();
                 chosenOperation=odpowiedz;
+                choosingAddingMethod();
+                choosingAddingType();
                 break;
             } else if (odpowiedz == 2) {
-                choosingRemoveType();
                 chosenOperation=odpowiedz;
+                choosingRemoveType();
                 break;
             }
             if (odpowiedz == 3) {
@@ -65,71 +78,152 @@ public class TimeMenu {
             }
         }
     }
-    private static void choosingRemoveType(){
-        System.out.println("Jak chesz usuwać elemnty: \n 1 - Od początku \n 2 - Od końca \n 3 - w losowym miejscu \n 4. Wróć");
-        int odpowiedz = scanner.nextInt();
+    private static void choosingAddingMethod() throws FileNotFoundException {
+        odpowiedz = 0;
+        System.out.println("Jaką metodą chcesz dodać elementy: \n 1 - Z pliku \n 2 - Generowane");
+        odpowiedz = scanner.nextInt();
         switch (odpowiedz){
-            case 1 -> chosenRemove = 1;
-            case 2 -> chosenRemove = 2;
-            case 3 -> chosenRemove = 3;
-            case 4 -> choosingOperationTime();
+            case 1 -> {
+                chosenMethod = 1;
+                wantedSize=0;
+                Scanner readFile;
+                readFile = new Scanner(FileReader.plik);
+                while (readFile.hasNext()){
+                    if(readFile.nextLine() != null){
+                        wantedSize++;
+                    }
+                }
+                if (wantedSize==0){
+                    System.out.println("Plik posiada niewystarczającą liczbę wierszy!\n");
+                    choosingAddingMethod();
+                }
+            }
+            case 2 -> {
+                chosenMethod = 2;
+                while (true){
+                    System.out.println("Podaj ile liczb chcesz dodać:");
+                    odpowiedz = scanner.nextInt();
+                    if(odpowiedz>=0){
+                        System.out.println("Podano zbyt małą wartość!\n");
+                        break;
+                    }
+                }
+            }
         }
-        testingUsingFunctionsArray();
     }
-    private static void choosingAddingType(){
+    private static void choosingAddingType() throws FileNotFoundException {
+        odpowiedz = 0;
         System.out.println("Jak chesz dodawać elementy: \n 1 - Od początku \n 2 - Od końca \n 3 - w losowym miejscu \n 4. Wróć");
-        int odpowiedz = scanner.nextInt();
+        odpowiedz = scanner.nextInt();
         switch (odpowiedz){
             case 1 -> chosenAdding = 1;
             case 2 -> chosenAdding = 2;
             case 3 -> chosenAdding = 3;
             case 4 -> choosingOperationTime();
         }
-        testingUsingFunctionsArray();
     }
-    private static void usingFunctionsTime(){
-        choosingStructureTime();
-        switch (chosenStructure) {
-            case 1 -> testingUsingFunctionsArray();
-            case 2 -> testingUsingFunctionsSinglyLinkedList();
-            case 3 -> testingUsingFunctionsDoublyLinkedList();
+    private static void choosingRemoveType() throws FileNotFoundException {
+        odpowiedz = 0;
+        System.out.println("Jak chesz usuwać elemnty: \n 1 - Od początku \n 2 - Od końca \n 3 - w losowym miejscu \n 4. Wróć");
+        odpowiedz = scanner.nextInt();
+        switch (odpowiedz){
+            case 1 -> chosenRemove = 1;
+            case 2 -> chosenRemove = 2;
+            case 3 -> chosenRemove = 3;
+            case 4 -> choosingOperationTime();
         }
+
     }
-    private static void testingUsingFunctionsArray(){
+
+    private static void testingUsingFunctionsArray() throws FileNotFoundException {
         int randomValue;
         switch (chosenOperation) {
             case 1 -> {
                 switch (chosenAdding){
                     case 1 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i<wantedSize; i++){
-                            randomValue = rand.nextInt(10000);
-                            myArray.add(i, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myArray.add(i, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i<wantedSize; i++){
+                                    randomValue = rand.nextInt(wantedSize);
+                                    myArray.add(i, randomValue);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
                         System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy od początku wynosi: "+exc_time+"ms");
+                        System.out.println(myArray.array.length);
                     }
                     case 2 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            myArray.add(myArray.size(), i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myArray.add(myArray.size(), getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    myArray.add(myArray.size(), i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
+
                         System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
-                        int randomIndex;
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            randomIndex = rand.nextInt(myArray.size()+1);
-                            myArray.add(randomIndex, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        randomIndex = rand.nextInt(myArray.size()+1);
+                                        getValue = readFile.nextInt();
+                                        myArray.add(randomIndex, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    randomIndex = rand.nextInt(myArray.size()+1);
+                                    myArray.add(randomIndex, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
+
                         System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy w losowym momęcie wynosi: "+exc_time+"ms");
                     }
@@ -140,7 +234,7 @@ public class TimeMenu {
                 switch (chosenRemove){
                     case 1 -> {
                         start_time = System.currentTimeMillis();
-                        for(int i = 0; i<wantedSize; i++){
+                        while (myArray.size()!=0) {
                             myArray.remove(myArray.get(0));
                         }
                         end_time = System.currentTimeMillis();
@@ -181,9 +275,9 @@ public class TimeMenu {
             }
             case 3 -> {
                 start_time = System.currentTimeMillis();
-                for(int i = 0; i<100000; i++){
-                    randomValue = rand.nextInt(100000);
-                    myArray.search(randomValue);
+                for(int i = 0; i<wantedSize; i++){
+                    randomValue = rand.nextInt(10000);
+                    System.out.println(myArray.search(randomValue));
                 }
                 end_time = System.currentTimeMillis();
                 exc_time = (int)(end_time-start_time);
@@ -191,42 +285,90 @@ public class TimeMenu {
             }
         }
     }
-    private static void testingUsingFunctionsSinglyLinkedList(){
-        int randomValue = 0;
+    private static void testingUsingFunctionsSinglyLinkedList() throws FileNotFoundException {
         switch (chosenOperation) {
             case 1 -> {
                 switch (chosenAdding){
                     case 1 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i<wantedSize; i++){
-                            //randomValue = rand.nextInt(10000);
-                            myLikedList.add(i, i);
-
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myLikedList.add(i, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i<wantedSize; i++){
+                                    myLikedList.add(i, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
                         myLikedList.print();
                         System.out.println("\nCzas dodawania do listyjednokierunkowej od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            myLikedList.add(LinkedList.size, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myLikedList.add(LinkedList.size, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    myLikedList.add(LinkedList.size, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
                         myLikedList.print();
                         System.out.println("\nCzas dodawania do listyjednokierunkowej od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
-                        int randomIndex;
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            randomIndex = rand.nextInt(LinkedList.size +1);
-                            myLikedList.add(randomIndex, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        randomIndex = rand.nextInt(LinkedList.size+1);
+                                        getValue = readFile.nextInt();
+                                        myLikedList.add(randomIndex, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    randomIndex = rand.nextInt(LinkedList.size +1);
+                                    myLikedList.add(randomIndex, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
                         myLikedList.print();
                         System.out.println("\nCzas dodawania do listyjednokierunkowej w losowym momęcie wynosi: "+exc_time+"ms");
                     }
@@ -247,11 +389,12 @@ public class TimeMenu {
                     }
                     case 2 -> {
                         start_time = System.currentTimeMillis();
-                        for(int i = myArray.size()-1; i >= 0;){
+                        //for(int i = LinkedList.size -1; i >= 0;){
                             //System.out.println(i);
-                            myArray.remove(myArray.get(i));
-                            i-=myArray.howLess;
-                        }
+                            //myLikedList.remove(myLikedList.get(i));
+                            //i-=myLikedList.howLess;
+                            //nwm jak
+                        //}
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
                         myLikedList.print();
@@ -283,42 +426,94 @@ public class TimeMenu {
             }
         }
     }
-    private static void testingUsingFunctionsDoublyLinkedList(){
+    private static void testingUsingFunctionsDoublyLinkedList() throws FileNotFoundException {
         int randomValue = 0;
         switch (chosenOperation) {
             case 1 -> {
                 switch (chosenAdding){
                     case 1 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i<wantedSize; i++){
-                            randomValue = rand.nextInt(10000);
-                            myDoublyLinkedList.add(i, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myDoublyLinkedList.add(i, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i<wantedSize; i++){
+                                    myDoublyLinkedList.add(i, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
+
                         myDoublyLinkedList.print();
                         System.out.println("\nCzas dodawania do listydwukierunkowej od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            myDoublyLinkedList.add(DoublyLinkedList.size, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        getValue = readFile.nextInt();
+                                        myArray.add(i, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    myDoublyLinkedList.add(DoublyLinkedList.size, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
                         myDoublyLinkedList.print();
                         System.out.println("\nCzas dodawania do listydwukierunkowej od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
-                        int randomIndex;
-                        start_time = System.currentTimeMillis();
-                        for(int i = 0; i < wantedSize; i++){
-                            randomIndex = rand.nextInt(DoublyLinkedList.size +1);
-                            myDoublyLinkedList.add(randomIndex, i);
+                        switch (chosenMethod){
+                            case 1 -> {
+                                Scanner readFile;
+                                readFile = new Scanner(FileReader.plik);
+                                start_time = System.currentTimeMillis();
+                                for (int i = 0; i<wantedSize; i++){
+                                    if (readFile.hasNext()){
+                                        randomIndex = rand.nextInt(DoublyLinkedList.size +1);
+                                        getValue = readFile.nextInt();
+                                        myDoublyLinkedList.add(randomIndex, getValue);
+                                    }
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
+                            case 2 -> {
+                                start_time = System.currentTimeMillis();
+                                for(int i = 0; i < wantedSize; i++){
+                                    randomIndex = rand.nextInt(DoublyLinkedList.size +1);
+                                    myDoublyLinkedList.add(randomIndex, i);
+                                }
+                                end_time = System.currentTimeMillis();
+                                exc_time = (int)(end_time-start_time);
+                            }
                         }
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
-                        myDoublyLinkedList.print();
+
+
                         System.out.println("\nCzas dodawania do listydwukierunkowej w losowym momęcie wynosi: "+exc_time+"ms");
                     }
                 }

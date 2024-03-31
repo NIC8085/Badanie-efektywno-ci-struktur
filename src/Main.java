@@ -17,21 +17,36 @@ public class Main {
     static long start_time = System.currentTimeMillis();
     static long end_time = System.currentTimeMillis();
     static int exc_time = 0;
-    static int wantedSize = 100000;
+    static int wantedSize;
 
     public static void main(String[] args){
-        System.out.println("Podaj co chcesz robić: \n 1 - Dodawać wartości \n 2 - Sprawdzić czas struktur danych");
+        try {
+            mainMenu();
+        }catch (InputMismatchException | FileNotFoundException e){
+            if (TimeMenu.chosenMethod==1){
+                System.out.println("Nie znaleziono pliku lub zawiera niepoprawne dane");
+            }else {
+                System.out.println("Podano złą wartość");
+            }
+        }
+    }
+    public static void mainMenu() throws FileNotFoundException {
+        System.out.println("Podaj co chcesz robić: \n 1 - Dodawać wartości \n 2 - Sprawdzić czas struktur danych \n 3 - Pomiar czasu do pliku");
         int selectedMenu = scanner.nextInt();
         switch (selectedMenu) {
             case 1 -> menu();
-            //case 2 -> timemenu();
+            case 2 -> TimeMenu.timemenu();
+            case 3 -> {
+                try {
+                    SaveTimeToFile.main();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
-    public static void menu(){
-        try {
-            usingFunctions();
-        }catch (InputMismatchException e){
-            System.out.println("Podano złą wartość");}
+    public static void menu() throws FileNotFoundException {
+        usingFunctions();
     }
     private static void choosingStructure(){
         while (true){

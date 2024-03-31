@@ -130,16 +130,15 @@ public class DoublyLinkedList {
             }
         }
     }
-    public void search(int value){
+    public boolean search(int value){
         Node current = head;
         while(current != null){
             if (current.data==value){
-                System.out.println("Liczba znajduje się w zbiorze");
-                return;
+                return true;
             }
             current=current.next;
         }
-        System.out.println("Liczba nie znajduje się w zbiorze");
+        return false;
     }
     public void print() {
         Node currNode = head;
