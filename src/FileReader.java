@@ -16,11 +16,11 @@ public class FileReader {
     static int wantedSize = 100000;
     static File plik = new File("src/file.txt");
     public static void main(String[] args) throws FileNotFoundException {
-        addingToArray();
-        addingToLinkedList();
-        addingToDoublyList();
+        addingToArrayByFile();
+        addingToLinkedListByFile();
+        addingToDoublyListByFile();
     }
-    public static void addingToArray() throws FileNotFoundException {
+    public static void addingToArrayByFile() throws FileNotFoundException {
         Scanner readFile;
         readFile = new Scanner(plik);
         start_time = System.currentTimeMillis();
@@ -34,7 +34,7 @@ public class FileReader {
         exc_time = (int)(end_time-start_time);
         System.out.println("\nCzas dodawania do tablicy od początku wynosi: "+exc_time+" ms");
     }
-    public static void addingToLinkedList() throws FileNotFoundException {
+    public static void addingToLinkedListByFile() throws FileNotFoundException {
         Scanner readFile;
         readFile = new Scanner(plik);
         start_time = System.currentTimeMillis();
@@ -48,7 +48,7 @@ public class FileReader {
         exc_time = (int)(end_time-start_time);
         System.out.println("\nCzas dodawania do listy jednokierunkowej od początku wynosi: "+exc_time+" ms");
     }
-    public static void addingToDoublyList() throws FileNotFoundException {
+    public static void addingToDoublyListByFile() throws FileNotFoundException {
         Scanner readFile;
         readFile = new Scanner(plik);
         int index = 0;
@@ -61,7 +61,6 @@ public class FileReader {
         }
         end_time = System.currentTimeMillis();
         exc_time = (int)(end_time-start_time);
-        myDoublyLinkedList.print();
         System.out.println("\nCzas dodawania do listy dwukierunkowej od początku wynosi: "+exc_time+" ms");
     }
 }

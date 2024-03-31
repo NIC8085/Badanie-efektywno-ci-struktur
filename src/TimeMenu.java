@@ -54,7 +54,8 @@ public class TimeMenu {
             }
         }
     }
-    private static void choosingOperationTime(){
+    private static void choosingOperationTime() throws FileNotFoundException {
+        odpowiedz = 0;
         while (true) {
             System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
             odpowiedz = scanner.nextInt();

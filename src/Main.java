@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -48,7 +50,7 @@ public class Main {
     public static void menu() throws FileNotFoundException {
         usingFunctions();
     }
-    private static void choosingStructure(){
+    private static void choosingStructure() throws FileNotFoundException {
         while (true){
             System.out.println("Podaj na jakiej strukturze danych chcesz operować: \n 1 - Tablica \n 2 - Lista jednokierunkowa \n 3 - Lista dwukierunkowa  \n 4. Wróć");
             int odpowiedz = scanner.nextInt();
@@ -56,8 +58,9 @@ public class Main {
                 chosenStructure = odpowiedz;
                 choosingOperation();
                 break;
-            }
-            else {
+            } else if (odpowiedz == 4) {
+                mainMenu();
+            } else {
                 System.out.println("Podałeś błędną wartość!\n");
             }
         }
@@ -71,7 +74,11 @@ public class Main {
                 givingValue(odpowiedz);
                 break;
             } else if (odpowiedz == 4) {
-                choosingStructure();
+                try {
+                    choosingStructure();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("Podałeś błędną wartość!\n");
             }
@@ -114,7 +121,7 @@ public class Main {
             }
         }
     }
-    private static void usingFunctions(){
+    private static void usingFunctions() throws FileNotFoundException {
         choosingStructure();
         switch (chosenStructure) {
             case 1 -> usingFunctionsArray();
