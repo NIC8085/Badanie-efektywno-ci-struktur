@@ -107,8 +107,8 @@ public class TimeMenu {
                             myArray.add(i, i);
                         }
                         end_time = System.currentTimeMillis();
-                        System.out.println(Arrays.toString(myArray.array));
                         exc_time = (int)(end_time-start_time);
+                        System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
@@ -117,8 +117,8 @@ public class TimeMenu {
                             myArray.add(myArray.size(), i);
                         }
                         end_time = System.currentTimeMillis();
-                        System.out.println(Arrays.toString(myArray.array));
                         exc_time = (int)(end_time-start_time);
+                        System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
@@ -130,6 +130,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy w losowym momęcie wynosi: "+exc_time+"ms");
                     }
                 }
@@ -144,6 +145,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas usuwania do tablicy od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
@@ -156,6 +158,7 @@ public class TimeMenu {
                             }
                             end_time = System.currentTimeMillis();
                             exc_time = (int)(end_time-start_time);
+                            System.out.println(Arrays.toString(myArray.array));
                             System.out.println("\nCzas usuwania do tablicy od końca wynosi: "+exc_time+"ms");
                         }
                     }
@@ -170,6 +173,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas usuwania do tablicy w losowym momęcie wynosi: "+exc_time+"ms");
                     }
                 }
@@ -195,7 +199,7 @@ public class TimeMenu {
                     case 1 -> {
                         start_time = System.currentTimeMillis();
                         for(int i = 0; i<wantedSize; i++){
-                            randomValue = rand.nextInt(10000);
+                            //randomValue = rand.nextInt(10000);
                             myLikedList.add(i, i);
 
                         }
@@ -211,6 +215,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        myLikedList.print();
                         System.out.println("\nCzas dodawania do listyjednokierunkowej od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
@@ -222,6 +227,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        myLikedList.print();
                         System.out.println("\nCzas dodawania do listyjednokierunkowej w losowym momęcie wynosi: "+exc_time+"ms");
                     }
                 }
@@ -236,6 +242,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        myLikedList.print();
                         System.out.println("\nCzas usuwania do listyjednokierunkowej od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
@@ -247,6 +254,7 @@ public class TimeMenu {
                         }
                         end_time = System.currentTimeMillis();
                         exc_time = (int)(end_time-start_time);
+                        myLikedList.print();
                         System.out.println("\nCzas usuwania do listyjednokierunkowej od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{

@@ -74,7 +74,6 @@ public class Array {
             }else {
                 howLess++;
             }
-
         }
         array=helpArray;
     }
