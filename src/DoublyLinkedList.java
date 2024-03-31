@@ -157,4 +157,22 @@ public class DoublyLinkedList {
         }
         System.out.print("]");
     }
+    public int get(int index) {
+        Node current = head;
+        int currentIndex = 0;
+
+        while (true) {
+            if (currentIndex == index){
+                return current.data;
+            }
+            current = current.next;
+            currentIndex++;
+            if (current == null) {
+                throw new IndexOutOfBoundsException("Indeks poza zakresem");
+            }
+        }
+    }
+    public int getTail(){
+        return tail.data;
+    }
 }

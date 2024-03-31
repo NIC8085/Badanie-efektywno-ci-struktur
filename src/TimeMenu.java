@@ -57,6 +57,7 @@ public class TimeMenu {
             }
             if (odpowiedz == 3) {
                 chosenOperation=odpowiedz;
+                break;
             } else if (odpowiedz == 4) {
                 choosingStructureTime();
             } else {
