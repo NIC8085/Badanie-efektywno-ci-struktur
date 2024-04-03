@@ -12,13 +12,16 @@ public class TimeMenu {
     private static int chosenStructure;
     private static int chosenOperation;
     public static int chosenMethod;
+    private static int chosenGenerateMethod;
     private static int chosenAdding;
     private static int chosenRemove;
-
+    private static int chosenRandomRange;
+    private static int chosenRandomStartRange;
+    private static int chosenRandomEndRange;
     private static long start_time = System.currentTimeMillis();
     private static long end_time = System.currentTimeMillis();
     private static int exc_time = 0;
-    private static int wantedSize = 100000;
+    private static int wantedSize;
     private static int randomIndex;
     private static int odpowiedz;
     private static int getValue;
@@ -80,37 +83,90 @@ public class TimeMenu {
         }
     }
     private static void choosingAddingMethod() throws FileNotFoundException {
-        odpowiedz = 0;
-        System.out.println("Jaką metodą chcesz dodać elementy: \n 1 - Z pliku \n 2 - Generowane");
-        odpowiedz = scanner.nextInt();
-        switch (odpowiedz){
-            case 1 -> {
-                chosenMethod = 1;
-                wantedSize=0;
-                Scanner readFile;
-                readFile = new Scanner(FileReader.plik);
-                while (readFile.hasNext()){
-                    if(readFile.nextLine() != null){
-                        wantedSize++;
+        while (true){
+            odpowiedz = 0;
+            System.out.println("Jaką metodą chcesz dodać elementy: \n 1 - Z pliku \n 2 - Generowane \n 3 - Wróć");
+            odpowiedz = scanner.nextInt();
+            if (odpowiedz == 1){
+                    chosenMethod = 1;
+                    wantedSize=0;
+                    Scanner readFile;
+                    readFile = new Scanner(FileReader.plik);
+                    while (readFile.hasNext()){
+                        if(readFile.nextLine() != null){
+                            wantedSize++;
+                        }
                     }
-                }
-                if (wantedSize==0){
-                    System.out.println("Plik posiada niewystarczającą liczbę wierszy!\n");
-                    choosingAddingMethod();
-                }
-            }
-            case 2 -> {
+                    if (wantedSize<=0){
+                        System.out.println("Plik posiada niewystarczającą liczbę wierszy!\n");
+                    }
+                    else {
+                        break;
+                    }
+            } else if (odpowiedz == 2) {
                 chosenMethod = 2;
                 while (true){
                     System.out.println("Podaj ile liczb chcesz dodać:");
                     odpowiedz = scanner.nextInt();
-                    if(odpowiedz>=0){
+                    if(odpowiedz<=0){
                         System.out.println("Podano zbyt małą wartość!\n");
+                    }
+                    else {
+                        wantedSize = odpowiedz;
+                        choosingIfRandomlyGenerated();
                         break;
                     }
                 }
+                break;
+            }
+            else if (odpowiedz == 3){
+                choosingOperationTime();
+                break;
+            }
+            else {
+                System.out.println("Podano niepoprawną wartość\n");
             }
         }
+
+
+    }
+    private static void choosingIfRandomlyGenerated() throws FileNotFoundException {
+        odpowiedz = 0;
+        while (true){
+            System.out.println("Jakie liczby mają być generowane:\n 1 - Uporządkowane (np. 0-999)\n 2 - Losowe\n 3 - Wróć");
+            odpowiedz = scanner.nextInt();
+            if(odpowiedz <= 0 || odpowiedz > 3){
+                System.out.println("Podano niepoprawną wartość!\n");
+            } else if (odpowiedz == 3) {
+                choosingAddingMethod();
+            } else if (odpowiedz == 2){
+                choosingRandomNumberRange();
+                break;
+            }
+            else {
+                break;
+            }
+        }
+        chosenGenerateMethod = odpowiedz;
+    }
+    private static void choosingRandomNumberRange(){
+        while (true){
+            chosenRandomStartRange = 0;
+            chosenRandomEndRange = 0;
+            System.out.println("Podaj zakres generowanych liczb: \n Od:");
+            chosenRandomStartRange = scanner.nextInt();
+            System.out.println(" Do:");
+            chosenRandomEndRange = scanner.nextInt();
+            chosenRandomRange = chosenRandomEndRange - chosenRandomStartRange;
+            if (chosenRandomRange<0){
+                System.out.println("Podano zły zakres liczb\n");
+            }
+            else {
+                chosenRandomRange++;
+                break;
+            }
+        }
+
     }
     private static void choosingAddingType() throws FileNotFoundException {
         odpowiedz = 0;
@@ -133,7 +189,6 @@ public class TimeMenu {
             case 3 -> chosenRemove = 3;
             case 4 -> choosingOperationTime();
         }
-
     }
 
     private static void testingUsingFunctionsArray() throws FileNotFoundException {
@@ -157,13 +212,25 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i<wantedSize; i++){
-                                    randomValue = rand.nextInt(wantedSize);
-                                    myArray.add(i, randomValue);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            myArray.add(i, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myArray.add(i, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
                         System.out.println(Arrays.toString(myArray.array));
@@ -186,12 +253,25 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    myArray.add(myArray.size(), i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            myArray.add(myArray.size(), i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomEndRange);
+                                            myArray.add(myArray.size(), randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
 
@@ -215,13 +295,28 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    randomIndex = rand.nextInt(myArray.size()+1);
-                                    myArray.add(randomIndex, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(myArray.size()+1);
+                                            myArray.add(randomIndex, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(myArray.size()+1);
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myArray.add(randomIndex, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
+
                             }
                         }
 
@@ -247,7 +342,6 @@ public class TimeMenu {
                         while(myArray.size() > 0){
                             start_time = System.currentTimeMillis();
                             for(int i = myArray.size()-1; i >= 0;){
-                                //System.out.println(i);
                                 myArray.removeFromEnd(myArray.get(i));
                                 i-=myArray.howLess;
                             }
@@ -277,8 +371,8 @@ public class TimeMenu {
             case 3 -> {
                 start_time = System.currentTimeMillis();
                 for(int i = 0; i<wantedSize; i++){
-                    randomValue = rand.nextInt(10000);
-                    System.out.println(myArray.search(randomValue));
+                    randomValue = rand.nextInt(chosenRandomRange);
+                    System.out.println(myArray.search(randomValue + chosenRandomStartRange));
                 }
                 end_time = System.currentTimeMillis();
                 exc_time = (int)(end_time-start_time);
@@ -287,6 +381,7 @@ public class TimeMenu {
         }
     }
     private static void testingUsingFunctionsSinglyLinkedList() throws FileNotFoundException {
+        int randomValue;
         switch (chosenOperation) {
             case 1 -> {
                 switch (chosenAdding){
@@ -306,12 +401,25 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i<wantedSize; i++){
-                                    myLikedList.add(i, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            myLikedList.add(i, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myLikedList.add(i, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
                         myLikedList.print();
@@ -333,12 +441,25 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    myLikedList.add(LinkedList.size, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            myLikedList.add(LinkedList.size, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myLikedList.add(LinkedList.size, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
                         myLikedList.print();
@@ -361,13 +482,27 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    randomIndex = rand.nextInt(LinkedList.size +1);
-                                    myLikedList.add(randomIndex, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(LinkedList.size +1);
+                                            myLikedList.add(randomIndex, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(LinkedList.size +1);
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myLikedList.add(randomIndex, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
                         myLikedList.print();
@@ -418,8 +553,9 @@ public class TimeMenu {
             }
             case 3 -> {
                 start_time = System.currentTimeMillis();
-                for(int i = 0; i<100000; i++){
-                    myLikedList.search(i);
+                for(int i = 0; i<wantedSize; i++){
+                    randomValue = rand.nextInt(chosenRandomRange);
+                    myLikedList.search(randomValue+chosenRandomStartRange);
                 }
                 end_time = System.currentTimeMillis();
                 exc_time = (int)(end_time-start_time);
@@ -428,7 +564,7 @@ public class TimeMenu {
         }
     }
     private static void testingUsingFunctionsDoublyLinkedList() throws FileNotFoundException {
-        int randomValue = 0;
+        int randomValue;
         switch (chosenOperation) {
             case 1 -> {
                 switch (chosenAdding){
@@ -448,12 +584,25 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i<wantedSize; i++){
-                                    myDoublyLinkedList.add(i, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            myDoublyLinkedList.add(i, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i<wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myDoublyLinkedList.add(i, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
 
@@ -476,12 +625,26 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    myDoublyLinkedList.add(DoublyLinkedList.size, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            myDoublyLinkedList.add(DoublyLinkedList.size, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myDoublyLinkedList.add(DoublyLinkedList.size, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
+
                             }
                         }
                         myDoublyLinkedList.print();
@@ -504,17 +667,29 @@ public class TimeMenu {
                                 exc_time = (int)(end_time-start_time);
                             }
                             case 2 -> {
-                                start_time = System.currentTimeMillis();
-                                for(int i = 0; i < wantedSize; i++){
-                                    randomIndex = rand.nextInt(DoublyLinkedList.size +1);
-                                    myDoublyLinkedList.add(randomIndex, i);
+                                switch (chosenGenerateMethod){
+                                    case 1 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(DoublyLinkedList.size +1);
+                                            myDoublyLinkedList.add(randomIndex, i);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
+                                    case 2 -> {
+                                        start_time = System.currentTimeMillis();
+                                        for(int i = 0; i < wantedSize; i++){
+                                            randomIndex = rand.nextInt(DoublyLinkedList.size +1);
+                                            randomValue = rand.nextInt(chosenRandomRange);
+                                            myDoublyLinkedList.add(randomIndex, randomValue + chosenRandomStartRange);
+                                        }
+                                        end_time = System.currentTimeMillis();
+                                        exc_time = (int)(end_time-start_time);
+                                    }
                                 }
-                                end_time = System.currentTimeMillis();
-                                exc_time = (int)(end_time-start_time);
                             }
                         }
-
-
                         System.out.println("\nCzas dodawania do listydwukierunkowej w losowym momęcie wynosi: "+exc_time+"ms");
                     }
                 }
@@ -563,8 +738,9 @@ public class TimeMenu {
             }
             case 3 -> {
                 start_time = System.currentTimeMillis();
-                for(int i = 0; i<100000; i++){
-                    myDoublyLinkedList.search(i);
+                for(int i = 0; i<wantedSize; i++){
+                    randomValue = rand.nextInt(chosenRandomRange);
+                    myDoublyLinkedList.search(randomValue+chosenRandomStartRange);
                 }
                 end_time = System.currentTimeMillis();
                 exc_time = (int)(end_time-start_time);
