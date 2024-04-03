@@ -5,18 +5,18 @@ public class Array {
     public int howLess;
     public void add(int index,int value) {
         int j = 0;
-        int[] newArray = new int[array.length + 1];
+        int[] helpArray = new int[array.length + 1];
 
         for(int i = 0; i<array.length+1; i++){
             if (i==index){
-                newArray[i] = value;
+                helpArray[i] = value;
                 j++;
             }
             else {
-                newArray[i] = array[i-j];
+                helpArray[i] = array[i-j];
             }
         }
-        array = newArray;
+        array = helpArray;
     }
     public int get(int index) {
         if (index < 0 || index >= array.length) {
@@ -26,15 +26,15 @@ public class Array {
     }
 
     public boolean search(int value){
-        boolean isitThere = false;
+        boolean isItThere = false;
         for(int i = 0; i < array.length;i++){
             if(get(i)==value) {
-                isitThere = true;
+                isItThere = true;
                 break;
             }
         }
-        if(isitThere){
-            return isitThere;
+        if(isItThere){
+            return isItThere;
         }
         return false;
     }
