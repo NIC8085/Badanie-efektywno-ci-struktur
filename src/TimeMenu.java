@@ -4,11 +4,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TimeMenu {
-    private static Array myArray = new Array();
-    private static LinkedList myLikedList = new LinkedList();
-    private static DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
-    private static Random rand = new Random();
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Array myArray = new Array();
+    private static final LinkedList myLikedList = new LinkedList();
+    private static final DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
+    private static final Random rand = new Random();
+    private static final Scanner scanner = new Scanner(System.in);
     private static int chosenStructure;
     private static int chosenOperation;
     public static int chosenMethod;
@@ -32,11 +32,11 @@ public class TimeMenu {
         }
     }
     private static void usingFunctionsTime() throws FileNotFoundException {
-        choosingStructureTime();
+        choosingStructureTime(); //1 dół
         switch (chosenStructure) {
-            case 1 -> testingUsingFunctionsArray();
-            case 2 -> testingUsingFunctionsSinglyLinkedList();
-            case 3 -> testingUsingFunctionsDoublyLinkedList();
+            case 1 -> testingUsingFunctionsArray(); //8
+            case 2 -> testingUsingFunctionsSinglyLinkedList(); //9 dół
+            case 3 -> testingUsingFunctionsDoublyLinkedList(); //10 dół
         }
     }
     private static void choosingStructureTime() throws FileNotFoundException {
@@ -46,7 +46,7 @@ public class TimeMenu {
             odpowiedz = scanner.nextInt();
             if(odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3){
                 chosenStructure = odpowiedz;
-                choosingOperationTime();
+                choosingOperationTime(); //1 dół
                 break;
             }
             else if (odpowiedz == 4) {
@@ -64,8 +64,8 @@ public class TimeMenu {
             odpowiedz = scanner.nextInt();
             if (odpowiedz == 1 ) {
                 chosenOperation=odpowiedz;
-                choosingAddingMethod();
-                choosingAddingType();
+                choosingAddingMethod(); //1 dół
+                choosingAddingType(); //4 dół
                 break;
             } else if (odpowiedz == 2) {
                 chosenOperation=odpowiedz;
@@ -113,22 +113,20 @@ public class TimeMenu {
                     }
                     else {
                         wantedSize = odpowiedz;
-                        choosingIfRandomlyGenerated();
+                        choosingIfRandomlyGenerated(); //1 dół
                         break;
                     }
                 }
                 break;
             }
             else if (odpowiedz == 3){
-                choosingOperationTime();
+                choosingOperationTime(); //1 góra
                 break;
             }
             else {
                 System.out.println("Podano niepoprawną wartość\n");
             }
         }
-
-
     }
     private static void choosingIfRandomlyGenerated() throws FileNotFoundException {
         odpowiedz = 0;
@@ -140,7 +138,7 @@ public class TimeMenu {
             } else if (odpowiedz == 3) {
                 choosingAddingMethod();
             } else if (odpowiedz == 2){
-                choosingRandomNumberRange();
+                choosingRandomNumberRange(); //1 dół
                 break;
             }
             else {
@@ -166,7 +164,6 @@ public class TimeMenu {
                 break;
             }
         }
-
     }
     private static void choosingAddingType() throws FileNotFoundException {
         odpowiedz = 0;
@@ -176,7 +173,7 @@ public class TimeMenu {
             case 1 -> chosenAdding = 1;
             case 2 -> chosenAdding = 2;
             case 3 -> chosenAdding = 3;
-            case 4 -> choosingOperationTime();
+            case 4 -> choosingOperationTime(); //4 góra
         }
     }
     private static void choosingRemoveType() throws FileNotFoundException {
@@ -187,10 +184,9 @@ public class TimeMenu {
             case 1 -> chosenRemove = 1;
             case 2 -> chosenRemove = 2;
             case 3 -> chosenRemove = 3;
-            case 4 -> choosingOperationTime();
+            case 4 -> choosingOperationTime(); //4 góra
         }
     }
-
     private static void testingUsingFunctionsArray() throws FileNotFoundException {
         int randomValue;
         switch (chosenOperation) {
@@ -274,7 +270,6 @@ public class TimeMenu {
                                 }
                             }
                         }
-
                         System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy od końca wynosi: "+exc_time+"ms");
                     }
@@ -319,7 +314,6 @@ public class TimeMenu {
 
                             }
                         }
-
                         System.out.println(Arrays.toString(myArray.array));
                         System.out.println("\nCzas dodawania do tablicy w losowym momęcie wynosi: "+exc_time+"ms");
                     }
@@ -524,17 +518,12 @@ public class TimeMenu {
                         System.out.println("\nCzas usuwania do listyjednokierunkowej od początku wynosi: "+exc_time+"ms");
                     }
                     case 2 -> {
-                        start_time = System.currentTimeMillis();
-                        //for(int i = LinkedList.size -1; i >= 0;){
-                            //System.out.println(i);
-                            //myLikedList.remove(myLikedList.get(i));
-                            //i-=myLikedList.howLess;
-                            //nwm jak
-                        //}
-                        end_time = System.currentTimeMillis();
-                        exc_time = (int)(end_time-start_time);
-                        myLikedList.print();
-                        System.out.println("\nCzas usuwania do listyjednokierunkowej od końca wynosi: "+exc_time+"ms");
+                        //start_time = System.currentTimeMillis();
+                        System.out.println("\nNie wiemy jak można usuwać od końca po liście jednokierunkowej według wartości \n");
+                        //end_time = System.currentTimeMillis();
+                        //exc_time = (int)(end_time-start_time);
+                        //myLikedList.print();
+                        //System.out.println("\nCzas usuwania do listyjednokierunkowej od końca wynosi: "+exc_time+"ms");
                     }
                     case 3 ->{
                         int randomIndex;
@@ -605,7 +594,6 @@ public class TimeMenu {
                                 }
                             }
                         }
-
                         myDoublyLinkedList.print();
                         System.out.println("\nCzas dodawania do listydwukierunkowej od początku wynosi: "+exc_time+"ms");
                     }
@@ -713,7 +701,6 @@ public class TimeMenu {
                             start_time = System.currentTimeMillis();
                             for(int i = wantedSize-1; i >= 0; i--){
                                 myDoublyLinkedList.removeFromEnd(myDoublyLinkedList.get(i));
-
                             }
                             end_time = System.currentTimeMillis();
                             exc_time = (int)(end_time-start_time);
