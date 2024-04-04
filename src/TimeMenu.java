@@ -25,18 +25,11 @@ public class TimeMenu {
     private static int randomIndex;
     private static int odpowiedz;
     private static int getValue;
+    private boolean back;
 
     public static void timemenu() throws FileNotFoundException {
         while(true){
-            usingFunctionsTime();
-        }
-    }
-    private static void usingFunctionsTime() throws FileNotFoundException {
-        choosingStructureTime(); //1 dół
-        switch (chosenStructure) {
-            case 1 -> testingUsingFunctionsArray(); //8
-            case 2 -> testingUsingFunctionsSinglyLinkedList(); //9 dół
-            case 3 -> testingUsingFunctionsDoublyLinkedList(); //10 dół
+            choosingStructureTime();
         }
     }
     private static void choosingStructureTime() throws FileNotFoundException {
@@ -46,7 +39,7 @@ public class TimeMenu {
             odpowiedz = scanner.nextInt();
             if(odpowiedz == 1 || odpowiedz == 2 || odpowiedz == 3){
                 chosenStructure = odpowiedz;
-                choosingOperationTime(); //1 dół
+                choosingOperationTime(); //
                 break;
             }
             else if (odpowiedz == 4) {
@@ -64,8 +57,7 @@ public class TimeMenu {
             odpowiedz = scanner.nextInt();
             if (odpowiedz == 1 ) {
                 chosenOperation=odpowiedz;
-                choosingAddingMethod(); //1 dół
-                choosingAddingType(); //4 dół
+                choosingAddingMethod();
                 break;
             } else if (odpowiedz == 2) {
                 chosenOperation=odpowiedz;
@@ -81,6 +73,7 @@ public class TimeMenu {
                 System.out.println("Podałeś błędną wartość!\n");
             }
         }
+        usingFunctionsTime();
     }
     private static void choosingAddingMethod() throws FileNotFoundException {
         while (true){
@@ -127,6 +120,7 @@ public class TimeMenu {
                 System.out.println("Podano niepoprawną wartość\n");
             }
         }
+        choosingAddingType();
     }
     private static void choosingIfRandomlyGenerated() throws FileNotFoundException {
         odpowiedz = 0;
@@ -185,6 +179,13 @@ public class TimeMenu {
             case 2 -> chosenRemove = 2;
             case 3 -> chosenRemove = 3;
             case 4 -> choosingOperationTime(); //4 góra
+        }
+    }
+    private static void usingFunctionsTime() throws FileNotFoundException {
+        switch (chosenStructure) {
+            case 1 -> testingUsingFunctionsArray();
+            case 2 -> testingUsingFunctionsSinglyLinkedList();
+            case 3 -> testingUsingFunctionsDoublyLinkedList();
         }
     }
     private static void testingUsingFunctionsArray() throws FileNotFoundException {
