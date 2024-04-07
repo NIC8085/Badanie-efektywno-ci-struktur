@@ -26,12 +26,6 @@ public class TimeMenu {
     private static int odpowiedz;
     private static int getValue;
 
-    public static void timemenu() throws FileNotFoundException {
-        while (true) {
-            choosingStructureTime(); //1 dół
-        }
-    }
-
     public static void choosingStructureTime() throws FileNotFoundException {
         odpowiedz = 0;
         while (true) {
