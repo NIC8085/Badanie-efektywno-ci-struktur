@@ -32,21 +32,25 @@ public class Main {
             }
         }
     }
+
     public static void mainMenu() throws FileNotFoundException {
-        System.out.println("Podaj co chcesz robić: \n 1 - Dodawać wartości \n 2 - Sprawdzić czas struktur danych \n 3 - Pomiar czasu do pliku");
-        int selectedMenu = scanner.nextInt();
-        switch (selectedMenu) {
-            case 1 -> menu();
-            case 2 -> TimeMenu.timemenu();
-            case 3 -> {
-                try {
-                    SaveTimeToFile.main();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        while (true){
+            System.out.println("Podaj co chcesz robić: \n 1 - Sprawdzić czas struktur danych \n 2 - Pomiar czasu do pliku");
+            int selectedMenu = scanner.nextInt();
+            switch (selectedMenu) {
+                //case 1 -> menu();
+                case 1 -> TimeMenu.choosingStructureTime();
+                case 2 -> {
+                    try {
+                        SaveTimeToFile.main();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
     }
+    /*
     public static void menu() throws FileNotFoundException {
         usingFunctions();
     }
@@ -198,4 +202,5 @@ public class Main {
             }
         }
     }
+    */
 }
