@@ -2,12 +2,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class SaveTimeToFile {
-    static long start_time = System.currentTimeMillis();
-    static long end_time = System.currentTimeMillis();
+class SaveTimeToFile {
+    static long start_time = System.nanoTime();
+    static long end_time = System.nanoTime();
+    static int avg = 0;
     static Random rand = new Random();
     static int exc_time = 0;
-    static int wantedSize = 100000;
+    static int wantedSize = 10000;
     static FileWriter myWriter;
     static int howManyTest = 10;
     /*----------------------------Array----------------------------*/
@@ -93,227 +94,267 @@ public class SaveTimeToFile {
 
     public static void searchArrayTime(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             Array myArray = new Array();
-            start_time = System.currentTimeMillis();
-            for(int i = 0; i<wantedSize; i++){
+            for(int i = 0; i<wantedSize; i++) {
+                start_time = System.nanoTime();
                 myArray.search(i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time - start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            searchTimeArray[j] = exc_time;
-
+            searchTimeArray[j] = avg/wantedSize;
         }
     }
     public static void searchLinkedTime(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             LinkedList myLinkedList = new LinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myLinkedList.search(i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            searchTimeLinked[j] = exc_time;
+            searchTimeLinked[j] = avg/wantedSize;
         }
     }
     public static void searchDoublyTime(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myDoublyLinkedList.search(i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            searchTimeDoubly[j] = exc_time;
+            searchTimeDoubly[j] = avg/wantedSize;
         }
     }
     public static void addingToArrayFromStart() {
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             Array myArray = new Array();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myArray.add(i, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnArrayStartTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnArrayStartTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myArray.remove(myArray.get(0));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnArrayStartTime[j] = exc_time;
+            removeOnArrayStartTime[j] = avg/wantedSize;
         }
     }
     public static void addingToArrayFromEnd() {
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             Array myArray = new Array();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 myArray.add(myArray.size(), i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnArrayEndTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnArrayEndTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = myArray.size()-1; i >= 0;){
+                start_time = System.nanoTime();
                 myArray.removeFromEnd(myArray.get(i));
                 i-=myArray.howLess;
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnArrayEndTime[j] = exc_time;
+            removeOnArrayEndTime[j] = avg/wantedSize;
         }
     }
     public static void addingToArrayFromRandom() {
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             Array myArray = new Array();
             int randomIndex;
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 randomIndex = rand.nextInt(myArray.size()+1);
                 myArray.add(randomIndex, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnArrayRandomTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnArrayRandomTime[j] = avg/wantedSize;
+            avg = 0;
             while (myArray.size()!= 0){
+                start_time = System.nanoTime();
                 for(int i = 0; i<myArray.size(); i++){
                     randomIndex = rand.nextInt(myArray.size());
                     myArray.remove(myArray.get(randomIndex));
+                    end_time = System.nanoTime();
+                    exc_time = Math.toIntExact(end_time-start_time);
+                    avg += exc_time;
                 }
+                removeOnArrayRandomTime[j] = avg/wantedSize;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnArrayRandomTime[j] = exc_time;
+
         }
     }
     public static void addingToLinkedListStart() {
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             LinkedList myLikedList = new LinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myLikedList.add(i, i);
-
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnLinkedStartTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnLinkedStartTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 myLikedList.remove(myLikedList.get(0));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnLinkedStartTime[j] = exc_time;
+            removeOnLinkedStartTime[j] = avg/wantedSize;
         }
     }
     public static void addingToLinkedListEnd(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             LinkedList myLikedList = new LinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 myLikedList.add(LinkedList.size, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnLinkedEndTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnLinkedEndTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = LinkedList.size -1; i >= 0; i--){
+                start_time = System.nanoTime();
                 myLikedList.remove(myLikedList.get(i));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnLinkedEndTime[j] = exc_time;
+            removeOnLinkedEndTime[j] = avg/wantedSize;
         }
     }
     public static void addingToLinkedListRandom(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             LinkedList myLikedList = new LinkedList();
             int randomIndex;
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 randomIndex = rand.nextInt(LinkedList.size +1);
                 myLikedList.add(randomIndex, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnLinkedRandomTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnLinkedRandomTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = 0; i< wantedSize; i++){
+                start_time = System.nanoTime();
                 randomIndex = rand.nextInt(LinkedList.size);
                 myLikedList.remove(myLikedList.get(randomIndex));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnLinkedRandomTime[j] = exc_time;
+            removeOnLinkedRandomTime[j] = avg/wantedSize;
         }
     }
 
     public static void addingToDoublyListStart(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i<wantedSize; i++){
+                start_time = System.nanoTime();
                 myDoublyLinkedList.add(i, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnDoublyStartTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnDoublyStartTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 myDoublyLinkedList.remove(myDoublyLinkedList.get(0));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnDoublyStartTime[j] = exc_time;
+            removeOnDoublyStartTime[j] = avg/wantedSize;
         }
     }
     public static void addingToDoublyListEnd(){
         for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
+                start_time = System.nanoTime();
                 myDoublyLinkedList.add(DoublyLinkedList.size, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnDoublyEndTime[j] = exc_time;
+            operationOnDoublyEndTime[j] = avg/wantedSize;
+            avg = 0;
             while(DoublyLinkedList.size > 0) {
-                start_time = System.currentTimeMillis();
+                start_time = System.nanoTime();
                 for (int i = wantedSize - 1; i >= 0; i--) {
                     myDoublyLinkedList.removeFromEnd(myDoublyLinkedList.get(i));
-
+                    end_time = System.nanoTime();
+                    exc_time = Math.toIntExact (end_time - start_time);
+                    avg += exc_time;
                 }
-                end_time = System.currentTimeMillis();
-                exc_time = (int) (end_time - start_time);
-                removeOnDoublyEndTime[j] = exc_time;
+                removeOnDoublyEndTime[j] = avg/wantedSize;
             }
         }
     }
     public static void addingToDoublyListRandom(){
-        for(int j = 0; j<10;j++){
+        for(int j = 0; j<howManyTest;j++){
+            avg = 0;
             DoublyLinkedList myDoublyLinkedList = new DoublyLinkedList();
             int randomIndex;
-            start_time = System.currentTimeMillis();
             for(int i = 0; i < wantedSize; i++){
                 randomIndex = rand.nextInt(DoublyLinkedList.size +1);
+                start_time = System.nanoTime();
                 myDoublyLinkedList.add(randomIndex, i);
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            operationOnDoublyRandomTime[j] = exc_time;
-            start_time = System.currentTimeMillis();
+            operationOnDoublyRandomTime[j] = avg/wantedSize;
+            avg = 0;
             for(int i = 0; i < wantedSize; i++){
                 randomIndex = rand.nextInt(DoublyLinkedList.size);
+                start_time = System.nanoTime();
                 myDoublyLinkedList.remove(myDoublyLinkedList.get(randomIndex));
+                end_time = System.nanoTime();
+                exc_time = Math.toIntExact(end_time-start_time);
+                avg += exc_time;
             }
-            end_time = System.currentTimeMillis();
-            exc_time = (int)(end_time-start_time);
-            removeOnDoublyRandomTime[j] = exc_time;
+            removeOnDoublyRandomTime[j] = avg/wantedSize;
         }
     }
 }
