@@ -44,6 +44,7 @@ public class TimeMenu {
     }
 
     private static void choosingOperationTime() throws FileNotFoundException {
+        int[] sizeArray = new int[3];
         odpowiedz = 0;
         while (true) {
             System.out.println("Jaką operację chcesz wykonać: \n 1 - Dodawanie \n 2 - Usuwanie \n 3 - Wyszukiwanie \n 4. Wróć");
@@ -53,14 +54,31 @@ public class TimeMenu {
                 choosingAddingMethod(); //1 dół
                 break;
             } else if (odpowiedz == 2) {
-                chosenOperation = odpowiedz;
-                choosingRemoveType(); //5 dół
-                if (chosenRemove != 4) {
+                sizeArray[0] = myArray.size();
+                sizeArray[1] = LinkedList.size;
+                sizeArray[2] = DoublyLinkedList.size;
+                if (sizeArray[chosenStructure-1]>0){
+                    chosenOperation = odpowiedz;
+                    choosingRemoveType(); //5 dół
+                    if (chosenRemove != 4) {
+                        break;
+                    }
                     break;
                 }
+                else {
+                    System.out.println("Struktura jest pusta \n");
+                }
             } else if (odpowiedz == 3) {
-                chosenOperation = odpowiedz;
-                break;
+                sizeArray[0] = myArray.size();
+                sizeArray[1] = LinkedList.size;
+                sizeArray[2] = DoublyLinkedList.size;
+                if (sizeArray[chosenStructure-1]>0){
+                    chosenOperation = odpowiedz;
+                    break;
+                }
+                else {
+                    System.out.println("Struktura jest pusta \n");
+                }
             } else if (odpowiedz == 4) {
                 odpowiedz = 0;
                 break;
